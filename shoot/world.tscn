@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://b00tlntuchblf"]
+
+[ext_resource type="PackedScene" uid="uid://bfplj0c4jswar" path="res://player.tscn" id="1_mjhtb"]
+[ext_resource type="PackedScene" uid="uid://dyq78lsp3teeu" path="res://enemy.tscn" id="2_ice3j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5exyc"]
+albedo_color = Color(1, 0.282353, 0.211765, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2uf23"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3ek8g"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Environment" id="Environment_hus16"]
+background_mode = 1
+background_color = Color(0.498039, 0.776471, 1, 1)
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.522498, -0.85264, -3.72701e-08, 0, -4.37114e-08, 1, -0.85264, -0.522498, -2.28391e-08, 0, 0, 0)
+light_color = Color(1, 1, 0.905882, 1)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(8.62582, 0, 0, 0, 1, 0, 0, 0, 8.54499, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_5exyc")
+mesh = SubResource("PlaneMesh_2uf23")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3ek8g")
+
+[node name="Player" parent="." instance=ExtResource("1_mjhtb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24638, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hus16")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.914501, 0.404583, 0, -0.404583, 0.914501, 0, 4.2934, 0)
+shadow_enabled = true
+
+[node name="Enemy" parent="." instance=ExtResource("2_ice3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03895, 7.85351)
