@@ -1,13 +1,13 @@
-using Godot;
+ using Godot;
 using System;
 
 public partial class Player : CharacterBody3D
 {
 	public int health = 100;
-	public const float Speed = 5.0f;
+	public const float Speed = 6.50f;
 	public const float RunSpeed = 7.5f;
 	public const float JumpVelocity = 4.5f;
-	public const float Sensitivity = 3.5f;
+	public const float Sensitivity = 1.5f;
 	public bool canShoot = true;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -16,8 +16,11 @@ public partial class Player : CharacterBody3D
 	RayCast3D rayCast;
 	AudioStreamPlayer shotSound;
 	Label healthLabel;
+	AnimationPlayer gunBob;
+	AnimationTree blendTree;
+	Area3D interactArea;
 
-    public override void _Ready()
+	public override void _Ready()
     {
         base._Ready();
 		Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -25,7 +28,10 @@ public partial class Player : CharacterBody3D
 		healthLabel = GetNode<Label>("CanvasLayer/Control/HealthLabel");
 		rayCast = GetNode<RayCast3D>("RayCast3D");
         shotSound = GetNode<AudioStreamPlayer>("ShootSound");
-		gunAnimation.AnimationFinished += () => shootAnimationEnd();
+		gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/AnimationPlayer");
+		blendTree = GetNode<AnimationTree>("CanvasLayer/Control/AnimationTree");
+		interactArea = GetNode<Area3D>("InteractArea");
+        gunAnimation.AnimationFinished += () => shootAnimationEnd();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -43,7 +49,6 @@ public partial class Player : CharacterBody3D
 		if (Input.IsActionJustPressed("shoot"))
 		{
 			shoot();
-
 		}
 
 		// Get the input direction and handle the movement/deceleration.
@@ -59,6 +64,15 @@ public partial class Player : CharacterBody3D
 		{
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+		}
+
+		if (Velocity != Vector3.Zero)
+		{
+			blendTree.Set("parameters/Blend2/blend_amount", 0);
+		}
+		else
+		{
+            blendTree.Set("parameters/Blend2/blend_amount", 1);
 		}
 
 		Velocity = velocity;

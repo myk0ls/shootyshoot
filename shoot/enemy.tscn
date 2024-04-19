@@ -77,7 +77,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0925531, 0, 0)
 pixel_size = 0.004
 billboard = 2
 sprite_frames = SubResource("SpriteFrames_wajpa")
-animation = &"walk"
+animation = &"idle"
 autoplay = "walk"
 
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 1.5
+
 [connection signal="body_entered" from="Area3D" to="." method="OnEnter"]
+[connection signal="body_exited" from="Area3D" to="." method="OnExit"]
+[connection signal="body_entered" from="PlayerDetection" to="." method="OnEnterDetection"]

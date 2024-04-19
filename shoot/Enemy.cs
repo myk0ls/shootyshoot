@@ -1,23 +1,33 @@
 using Godot;
 using System;
+using System.Security;
 
 public partial class Enemy : CharacterBody3D
 {
 	// Called when the node enters the scene tree for the first time.
+	[Export]
 	public int health = 100;
 	public float moveSpeed = 2f;
 	public float attackRange = 2f;
-	bool dead = false;
+	public int attackDamage = 25;
+    bool dead = false;
 
-	CharacterBody3D player;
+    States currentState = States.Idle;
+
+	Player player;
 	Area3D hitZone;
 	AnimatedSprite3D animatedSprite;
+	Timer attackTimer;
 
-	public override void _Ready()
+    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+
+    public override void _Ready()
 	{
-		player = GetParent().GetNode<CharacterBody3D>("Player");
+		player = (Player)GetParent().GetNode<CharacterBody3D>("Player");
         hitZone = GetNode<Area3D>("Area3D");
 		animatedSprite = GetNode<AnimatedSprite3D>("AnimatedSprite3D");
+		attackTimer = GetNode<Timer>("AttackTimer");
+		attackTimer.Timeout += () => doDamage();
 		hitZone.Monitorable = true;
 	}
 
@@ -28,20 +38,47 @@ public partial class Enemy : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (dead) return;
+		Vector3 velocity = Velocity;
+
+
+        if (dead) return;
 		//if (player != null) { return; }
 
-		var dir = player.GlobalPosition - this.GlobalPosition;
-		dir.Y = 0;
-		dir = dir.Normalized();
+		if (!IsOnFloor())
+		{
+            velocity.Y -= gravity * (float)delta;
+        }
 
-		Velocity = dir * moveSpeed;
+		switch(currentState)
+		{
+			case States.Idle:
+				animatedSprite.Play("idle");
+				break;
+
+			case States.Attack:
+                animatedSprite.Play("walk");
+                var dir = player.GlobalPosition - this.GlobalPosition;
+                dir.Y = 0;
+                dir = dir.Normalized();
+
+                velocity.X = dir.X * (float)moveSpeed;
+				velocity.Z = dir.Z * (float)moveSpeed;
+				break;
+			case States.Hit:
+				animatedSprite.Play("hit");
+				currentState = States.Attack;
+				break;
+
+        }
+
+        Velocity = velocity;
 
 		MoveAndSlide();
 	}
 
 	public void damage(int damage)
 	{
+		currentState = States.Hit;
 		this.health = health - damage;
 		animatedSprite.Play("hit");
 		GD.Print("HP:"+health);
@@ -65,7 +102,38 @@ public partial class Enemy : CharacterBody3D
 		GD.Print(node.Name);
 		if (node is Player)
 		{
-			node.Call("getDamage", 25);
+			doDamage();
+            attackTimer.Start();
+        }
+	}
+
+	public void OnExit(Node node)
+	{
+		if (node is Player)
+		{
+			attackTimer.Stop();
+			GD.Print("EXIT");
 		}
 	}
+
+	public void OnEnterDetection(Node node)
+	{
+        if (node is Player)
+        {
+            currentState = States.Attack;
+        }
+	}
+
+	public void doDamage()
+	{
+		player.getDamage(attackDamage);
+	}
+
+	enum States
+	{
+		Idle,
+		Attack,
+		Hit
+	}
+
 }
