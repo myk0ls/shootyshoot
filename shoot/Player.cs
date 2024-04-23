@@ -66,6 +66,7 @@ public partial class Player : CharacterBody3D
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
 		}
 
+
 		if (Velocity != Vector3.Zero)
 		{
 			blendTree.Set("parameters/Blend2/blend_amount", 0);

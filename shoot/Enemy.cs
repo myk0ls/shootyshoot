@@ -7,7 +7,7 @@ public partial class Enemy : CharacterBody3D
 	// Called when the node enters the scene tree for the first time.
 	[Export]
 	public int health = 100;
-	public float moveSpeed = 2f;
+	public float moveSpeed = 3f;
 	public float attackRange = 2f;
 	public int attackDamage = 25;
     bool dead = false;
