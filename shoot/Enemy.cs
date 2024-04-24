@@ -49,6 +49,7 @@ public partial class Enemy : CharacterBody3D
             velocity.Y -= gravity * (float)delta;
         }
 
+
 		switch(currentState)
 		{
 			case States.Idle:

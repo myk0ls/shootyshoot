@@ -1,5 +1,6 @@
  using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class Player : CharacterBody3D
 {
@@ -9,6 +10,8 @@ public partial class Player : CharacterBody3D
 	public const float JumpVelocity = 4.5f;
 	public const float Sensitivity = 1.5f;
 	public bool canShoot = true;
+
+	public float blend = 0f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -59,22 +62,21 @@ public partial class Player : CharacterBody3D
 		{
 			velocity.X = direction.X * Speed;
 			velocity.Z = direction.Z * Speed;
-		}
+
+			// play bobbin
+            blend = 0f;
+            blendTree.Set("parameters/Blend2/blend_amount", 0);
+        }
 		else
 		{
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
-		}
 
-
-		if (Velocity != Vector3.Zero)
-		{
-			blendTree.Set("parameters/Blend2/blend_amount", 0);
-		}
-		else
-		{
-            blendTree.Set("parameters/Blend2/blend_amount", 1);
-		}
+			// smooth transition into idle
+            if (blend < 1)
+                blend += 0.1f;
+            blendTree.Set("parameters/Blend2/blend_amount", blend);
+        }
 
 		Velocity = velocity;
 		MoveAndSlide();
