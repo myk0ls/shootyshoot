@@ -1,115 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://bfplj0c4jswar"]
+[gd_scene load_steps=8 format=3 uid="uid://bfplj0c4jswar"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_qtxsx"]
-[ext_resource type="Texture2D" uid="uid://brev5jeqknfjq" path="res://gun1.png" id="2_8v3ol"]
-[ext_resource type="Texture2D" uid="uid://dqjgcymvap1bk" path="res://gun2.png" id="3_865ar"]
+[ext_resource type="Script" path="res://Control.cs" id="2_mppnl"]
+[ext_resource type="PackedScene" uid="uid://c56w7yeia5yc4" path="res://gun.tscn" id="2_tk3fb"]
 [ext_resource type="AudioStream" uid="uid://dovmo35nautsm" path="res://gunshotz.wav" id="4_e2s60"]
 [ext_resource type="Script" path="res://InteractArea.cs" id="5_l00f0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvec6"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_k8j5k"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_8v3ol")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_8v3ol")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_865ar")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_8v3ol")
-}],
-"loop": false,
-"name": &"shoot",
-"speed": 5.0
-}]
-
-[sub_resource type="Animation" id="Animation_p1hug"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(756, 396)]
-}
-
-[sub_resource type="Animation" id="Animation_si10e"]
-resource_name = "bob"
-length = 0.7
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(756, 396), Vector2(730, 396), Vector2(760, 396)]
-}
-
-[sub_resource type="Animation" id="Animation_ds6vl"]
-resource_name = "idle"
-
-[sub_resource type="Animation" id="Animation_r2s3x"]
-resource_name = "still"
-length = 0.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(756, 396)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ls0fx"]
-_data = {
-"RESET": SubResource("Animation_p1hug"),
-"bob": SubResource("Animation_si10e"),
-"idle": SubResource("Animation_ds6vl"),
-"still": SubResource("Animation_r2s3x")
-}
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n3ctj"]
-animation = &"still"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r806h"]
-animation = &"bob"
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_aj5l3"]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_7aysr"]
-nodes/Animation/node = SubResource("AnimationNodeAnimation_r806h")
-nodes/Animation/position = Vector2(420, 60)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_n3ctj")
-"nodes/Animation 2/position" = Vector2(420, 200)
-nodes/Blend2/node = SubResource("AnimationNodeBlend2_aj5l3")
-nodes/Blend2/position = Vector2(620, 180)
-nodes/output/position = Vector2(820, 260)
-node_connections = [&"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"output", 0, &"Blend2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0nj32"]
 radius = 1.45025
@@ -135,11 +32,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
-position = Vector2(756, 396)
-sprite_frames = SubResource("SpriteFrames_k8j5k")
-animation = &"shoot"
+script = ExtResource("2_mppnl")
 
 [node name="HealthLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
@@ -147,22 +40,14 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "HP:100"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control"]
-root_node = NodePath("../AnimatedSprite2D")
-libraries = {
-"": SubResource("AnimationLibrary_ls0fx")
-}
-autoplay = "still"
+[node name="AmmoLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1023.0
+offset_top = 602.0
+offset_right = 1063.0
+offset_bottom = 625.0
 
-[node name="AnimationTree" type="AnimationTree" parent="CanvasLayer/Control"]
-root_node = NodePath("../AnimatedSprite2D")
-libraries = {
-"": SubResource("AnimationLibrary_ls0fx")
-}
-tree_root = SubResource("AnimationNodeBlendTree_7aysr")
-advance_expression_base_node = NodePath("../AnimationPlayer")
-anim_player = NodePath("../AnimationPlayer")
-parameters/Blend2/blend_amount = 0.0
+[node name="Gun" parent="CanvasLayer/Control" instance=ExtResource("2_tk3fb")]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 8
@@ -170,15 +55,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -9.5
-offset_top = -9.5
-offset_right = 9.5
-offset_bottom = 9.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-color = Color(0.129412, 0.129412, 0.129412, 1)
+color = Color(0.129412, 0.129412, 0.129412, 0.258824)
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_e2s60")

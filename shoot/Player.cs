@@ -1,17 +1,23 @@
  using Godot;
 using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody3D
 {
 	public int health = 100;
-	public const float Speed = 6.50f;
+	public const float Speed = 8.50f;
 	public const float RunSpeed = 7.5f;
 	public const float JumpVelocity = 4.5f;
 	public const float Sensitivity = 1.5f;
 	public bool canShoot = true;
+    public Key[] keyArray;
 
-	public float blend = 0f;
+    public float blend = 0f;
+
+	[Signal]
+	public delegate void GunShotEventHandler();
+
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -22,19 +28,23 @@ public partial class Player : CharacterBody3D
 	AnimationPlayer gunBob;
 	AnimationTree blendTree;
 	Area3D interactArea;
+	gun gun;
 
 	public override void _Ready()
     {
         base._Ready();
 		Input.MouseMode = Input.MouseModeEnum.Captured;
-		gunAnimation = GetNode<AnimatedSprite2D>("CanvasLayer/Control/AnimatedSprite2D");
+		gunAnimation = GetNode<AnimatedSprite2D>("CanvasLayer/Control/Gun/AnimatedSprite2D");
 		healthLabel = GetNode<Label>("CanvasLayer/Control/HealthLabel");
 		rayCast = GetNode<RayCast3D>("RayCast3D");
         shotSound = GetNode<AudioStreamPlayer>("ShootSound");
-		gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/AnimationPlayer");
-		blendTree = GetNode<AnimationTree>("CanvasLayer/Control/AnimationTree");
+		gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/Gun/AnimationPlayer");
+		blendTree = GetNode<AnimationTree>("CanvasLayer/Control/Gun/AnimationTree");
 		interactArea = GetNode<Area3D>("InteractArea");
+		gun = (gun)GetNode<Node>("CanvasLayer/Control/Gun");
+		keyArray = new Key[2];
         gunAnimation.AnimationFinished += () => shootAnimationEnd();
+		gun.GunReload += reload;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -92,13 +102,22 @@ public partial class Player : CharacterBody3D
 			Camera3D camera = GetNode<Camera3D>("Camera3D");
 			camera.Rotation = new Vector3(Mathf.Clamp(camera.Rotation.X - motion.Relative.Y / 1000 * Sensitivity, -2, 2), camera.Rotation.Y, camera.Rotation.Z);
         }
+
+		if (Input.IsActionJustPressed("esc"))
+		{
+            if (DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen)
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+            else DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+        }
     }
 
 	public void shoot()
 	{
+		if (gun.ammoClip == 0) { return; }
 		if (canShoot == false) { return; }
 		canShoot = false;
         GD.Print("shot");
+		EmitSignal(nameof(Player.GunShot));
         gunAnimation.Play("shoot");
         shotSound.Play();
 		if (rayCast.IsColliding() && rayCast.GetCollider().HasMethod("kill"))
@@ -110,9 +129,17 @@ public partial class Player : CharacterBody3D
 
     }
 
+	public void reload()
+	{
+		gun.canReload = false;
+		gunAnimation.Play("reload");
+    }
+
 	public void shootAnimationEnd()
 	{
-		canShoot = true;
+        gun.canReload = true;
+        canShoot = true;
+		gunAnimation.Play("idle");
 	}
 
 	public void getDamage(int damage)
@@ -124,4 +151,16 @@ public partial class Player : CharacterBody3D
 			QueueFree();
 		}
 	}
+
+	public void pickKey(Key key)
+	{
+		for (int i = 0; i < keyArray.Length; i++)
+		{
+			if (keyArray[i] == null)
+			{
+				keyArray[i] = key;
+                break;
+			}
+		}
+    }
 }
