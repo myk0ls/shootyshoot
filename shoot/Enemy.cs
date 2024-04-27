@@ -6,7 +6,7 @@ public partial class Enemy : CharacterBody3D
 {
 	// Called when the node enters the scene tree for the first time.
 	[Export]
-	public int health = 100;
+	public int health = 200;
 	public float moveSpeed = 3f;
 	public float attackRange = 2f;
 	public int attackDamage = 25;
@@ -39,7 +39,7 @@ public partial class Enemy : CharacterBody3D
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
-
+        var dir = player.GlobalPosition - this.GlobalPosition;
 
         if (dead) return;
 		//if (player != null) { return; }
@@ -58,15 +58,18 @@ public partial class Enemy : CharacterBody3D
 
 			case States.Attack:
                 animatedSprite.Play("walk");
-                var dir = player.GlobalPosition - this.GlobalPosition;
+                //var dir = player.GlobalPosition - this.GlobalPosition;
                 dir.Y = 0;
                 dir = dir.Normalized();
 
                 velocity.X = dir.X * (float)moveSpeed;
 				velocity.Z = dir.Z * (float)moveSpeed;
 				break;
+
 			case States.Hit:
-				animatedSprite.Play("hit");
+                velocity.X = -dir.X * (float)10f;
+                velocity.Z = -dir.Z * (float)10f;
+                animatedSprite.Play("hit");
 				currentState = States.Attack;
 				break;
 

@@ -89,7 +89,6 @@ animation = &"bob"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_aj5l3"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_7aysr"]
-graph_offset = Vector2(-125.23, 39.1388)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_r806h")
 nodes/Animation/position = Vector2(420, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_n3ctj")
@@ -110,7 +109,7 @@ animations = [{
 "speed": 1.0
 }, {
 "frames": [{
-"duration": 1.2,
+"duration": 1.4,
 "texture": ExtResource("3_avrxe")
 }],
 "loop": false,
@@ -162,5 +161,5 @@ parameters/Blend2/blend_amount = 0.0
 position = Vector2(576, 500)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_dxm85")
-animation = &"idle"
+animation = &"reload"
 autoplay = "idle"

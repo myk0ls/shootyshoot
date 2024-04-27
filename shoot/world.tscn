@@ -1,9 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://b00tlntuchblf"]
+[gd_scene load_steps=23 format=3 uid="uid://b00tlntuchblf"]
 
 [ext_resource type="PackedScene" uid="uid://bfplj0c4jswar" path="res://player.tscn" id="1_mjhtb"]
 [ext_resource type="PackedScene" uid="uid://dyq78lsp3teeu" path="res://enemy.tscn" id="2_ice3j"]
 [ext_resource type="Script" path="res://Door.cs" id="3_b14s8"]
 [ext_resource type="Script" path="res://Key.cs" id="4_iyg5s"]
+[ext_resource type="Texture2D" uid="uid://k2gfyelagvg4" path="res://key.png" id="5_nngdr"]
+[ext_resource type="Script" path="res://Pickup.cs" id="6_towp6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5exyc"]
 albedo_color = Color(0.517647, 0.266667, 0.121569, 1)
@@ -21,10 +23,8 @@ ambient_light_color = Color(0.776471, 0.776471, 0.776471, 1)
 ambient_light_sky_contribution = 0.62
 volumetric_fog_density = 0.003
 
-[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_53sa8"]
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ueirq"]
-height = 1.09156
+height = 0.501905
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eg1uu"]
 albedo_color = Color(0.384314, 0.172549, 0, 1)
@@ -52,6 +52,11 @@ albedo_color = Color(0.384314, 0.172549, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipm4v"]
 albedo_color = Color(0.384314, 0.172549, 0, 1)
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_xi33o"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j47q2"]
+height = 1.01548
 
 [node name="World" type="Node3D"]
 
@@ -98,9 +103,10 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("4_iyg5s")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Key"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.467192, 0)
-mesh = SubResource("TubeTrailMesh_53sa8")
+[node name="Sprite3D" type="Sprite3D" parent="Key"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57037, 0)
+billboard = 2
+texture = ExtResource("5_nngdr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Key"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.490888, 0)
@@ -173,3 +179,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150.057, 22.0609, 137.452)
 use_collision = true
 size = Vector3(126.943, 45.2021, 47.664)
 material = SubResource("StandardMaterial3D_ipm4v")
+
+[node name="Pickup" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.50772, 0.2561, 7.91506)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("6_towp6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.864492, 0)
+mesh = SubResource("TubeTrailMesh_xi33o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890501, 0)
+shape = SubResource("CylinderShape3D_j47q2")
+
+[node name="Pickup2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8812, 0.2561, 7.91506)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("6_towp6")
+typeOf = "heal"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.459999, 0.864492, 0)
+mesh = SubResource("TubeTrailMesh_xi33o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890501, 0)
+shape = SubResource("CylinderShape3D_j47q2")

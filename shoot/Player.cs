@@ -24,13 +24,15 @@ public partial class Player : CharacterBody3D
 	AnimatedSprite2D gunAnimation;
 	RayCast3D rayCast;
 	AudioStreamPlayer shotSound;
-	Label healthLabel;
+    AudioStreamPlayer reloadSound;
+    Label healthLabel;
 	AnimationPlayer gunBob;
 	AnimationTree blendTree;
 	Area3D interactArea;
 	gun gun;
+    SpotLight3D gunFLash;
 
-	public override void _Ready()
+    public override void _Ready()
     {
         base._Ready();
 		Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -38,8 +40,10 @@ public partial class Player : CharacterBody3D
 		healthLabel = GetNode<Label>("CanvasLayer/Control/HealthLabel");
 		rayCast = GetNode<RayCast3D>("RayCast3D");
         shotSound = GetNode<AudioStreamPlayer>("ShootSound");
-		gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/Gun/AnimationPlayer");
+        reloadSound = GetNode<AudioStreamPlayer>("ReloadSound");
+        gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/Gun/AnimationPlayer");
 		blendTree = GetNode<AnimationTree>("CanvasLayer/Control/Gun/AnimationTree");
+		gunFLash = GetNode<SpotLight3D>("Camera3D/SpotLight3D");
 		interactArea = GetNode<Area3D>("InteractArea");
 		gun = (gun)GetNode<Node>("CanvasLayer/Control/Gun");
 		keyArray = new Key[2];
@@ -120,26 +124,28 @@ public partial class Player : CharacterBody3D
 		EmitSignal(nameof(Player.GunShot));
         gunAnimation.Play("shoot");
         shotSound.Play();
+		gunFLash.Visible = true;
 		if (rayCast.IsColliding() && rayCast.GetCollider().HasMethod("kill"))
 		{
 			GD.Print(rayCast.GetCollider().ToString());
 			//GD.Print("HIT!");
 			rayCast.GetCollider().Call("damage",50);
 		}
-
     }
 
 	public void reload()
 	{
 		gun.canReload = false;
 		gunAnimation.Play("reload");
+		reloadSound.Play();
     }
 
 	public void shootAnimationEnd()
 	{
         gun.canReload = true;
         canShoot = true;
-		gunAnimation.Play("idle");
+        gunFLash.Visible = false;
+        gunAnimation.Play("idle");
 	}
 
 	public void getDamage(int damage)
