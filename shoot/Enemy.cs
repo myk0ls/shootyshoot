@@ -12,12 +12,11 @@ public partial class Enemy : CharacterBody3D
 	public int attackDamage = 25;
     bool dead = false;
 
-    States currentState = States.Idle;
-
-	Player player;
-	Area3D hitZone;
-	AnimatedSprite3D animatedSprite;
-	Timer attackTimer;
+	public Player player;
+	public Area3D hitZone;
+	public AnimatedSprite3D animatedSprite;
+	public Timer attackTimer;
+	State stateMachine;
 
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -29,7 +28,8 @@ public partial class Enemy : CharacterBody3D
 		attackTimer = GetNode<Timer>("AttackTimer");
 		attackTimer.Timeout += () => doDamage();
 		hitZone.Monitorable = true;
-	}
+        //stateMachine = new State();
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -38,18 +38,18 @@ public partial class Enemy : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector3 velocity = Velocity;
-        var dir = player.GlobalPosition - this.GlobalPosition;
+		//Vector3 velocity = Velocity;
+        //var dir = player.GlobalPosition - this.GlobalPosition;
 
         if (dead) return;
 		//if (player != null) { return; }
-
+		/*
 		if (!IsOnFloor())
 		{
             velocity.Y -= gravity * (float)delta;
         }
-
-
+		*/
+		/*
 		switch(currentState)
 		{
 			case States.Idle:
@@ -74,15 +74,15 @@ public partial class Enemy : CharacterBody3D
 				break;
 
         }
+		*/
+        //Velocity = velocity;
 
-        Velocity = velocity;
-
-		MoveAndSlide();
+		//MoveAndSlide();
 	}
 
 	public void damage(int damage)
 	{
-		currentState = States.Hit;
+		//currentState = States.Hit;
 		this.health = health - damage;
 		animatedSprite.Play("hit");
 		GD.Print("HP:"+health);
@@ -95,49 +95,8 @@ public partial class Enemy : CharacterBody3D
 		QueueFree();
 	}
 
-	public void attack()
-	{
-        GD.Print("COLLISION");
-    }
-
-	public void OnEnter(Node node)
-	{
-		GD.Print("COLLISION");
-		GD.Print(node.Name);
-		if (node is Player)
-		{
-			doDamage();
-            attackTimer.Start();
-        }
-	}
-
-	public void OnExit(Node node)
-	{
-		if (node is Player)
-		{
-			attackTimer.Stop();
-			GD.Print("EXIT");
-		}
-	}
-
-	public void OnEnterDetection(Node node)
-	{
-        if (node is Player)
-        {
-            currentState = States.Attack;
-        }
-	}
-
 	public void doDamage()
 	{
 		player.getDamage(attackDamage);
 	}
-
-	enum States
-	{
-		Idle,
-		Attack,
-		Hit
-	}
-
 }

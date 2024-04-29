@@ -112,18 +112,6 @@ texture = ExtResource("5_nngdr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.490888, 0)
 shape = SubResource("CylinderShape3D_ueirq")
 
-[node name="Enemy2" parent="." instance=ExtResource("2_ice3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.40619, 4.69363, -7.90145)
-
-[node name="Enemy3" parent="." instance=ExtResource("2_ice3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.18844, 4.69363, -7.90145)
-
-[node name="Enemy4" parent="." instance=ExtResource("2_ice3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.48938, 4.69363, -7.90145)
-
-[node name="Enemy5" parent="." instance=ExtResource("2_ice3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.40461, 4.69363, -7.90145)
-
 [node name="Level" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Level"]
