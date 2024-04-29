@@ -17,6 +17,7 @@ public partial class Idle : State
 
 	public override void _PhysicsProcess(double delta)
 	{
+
 		Vector3 velocity = enemy.Velocity;
 
 		if (!enemy.IsOnFloor())
@@ -32,6 +33,7 @@ public partial class Idle : State
     public override void Enter()
     {
         enemy = machine.GetParent<Enemy>();
+		enemy.EnemyTagged += EnemyTagged;
     }
 
 	public override void Exit()
@@ -46,4 +48,9 @@ public partial class Idle : State
 			machine.TransitionTo("Attack");
         }
     }
+
+	public void EnemyTagged()
+	{
+		machine.TransitionTo("Tagged");
+	}
 }

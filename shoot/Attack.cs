@@ -34,8 +34,8 @@ public partial class Attack : State
         dir.Y = 0;
         dir = dir.Normalized();
 
-        velocity.X = dir.X * (float)1f;
-        velocity.Z = dir.Z * (float)1f;
+        velocity.X = dir.X * (float)2f;
+        velocity.Z = dir.Z * (float)2f;
 
         enemy.Velocity = velocity;
 

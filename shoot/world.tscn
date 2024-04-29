@@ -1,11 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://b00tlntuchblf"]
+[gd_scene load_steps=25 format=3 uid="uid://b00tlntuchblf"]
 
 [ext_resource type="PackedScene" uid="uid://bfplj0c4jswar" path="res://player.tscn" id="1_mjhtb"]
 [ext_resource type="PackedScene" uid="uid://dyq78lsp3teeu" path="res://enemy.tscn" id="2_ice3j"]
 [ext_resource type="Script" path="res://Door.cs" id="3_b14s8"]
 [ext_resource type="Script" path="res://Key.cs" id="4_iyg5s"]
 [ext_resource type="Texture2D" uid="uid://k2gfyelagvg4" path="res://key.png" id="5_nngdr"]
+[ext_resource type="Texture2D" uid="uid://dlfcwovxf4bld" path="res://cactus.png" id="6_6pch7"]
 [ext_resource type="Script" path="res://Pickup.cs" id="6_towp6"]
+[ext_resource type="Texture2D" uid="uid://qy6pc5cqhfb8" path="res://bush.png" id="7_k8pcs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5exyc"]
 albedo_color = Color(0.517647, 0.266667, 0.121569, 1)
@@ -168,6 +170,153 @@ use_collision = true
 size = Vector3(126.943, 45.2021, 47.664)
 material = SubResource("StandardMaterial3D_ipm4v")
 
+[node name="Cactus" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2853, 1.8573, 3.3428)
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus2" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.31568, 1.8573, 24.8451)
+flip_h = true
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus3" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5491, 1.8573, 3.3428)
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus4" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.5187, 1.8573, 24.8451)
+flip_h = true
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus5" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2853, 1.8573, -45.9506)
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus6" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.31568, 1.8573, -24.4483)
+flip_h = true
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus7" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5491, 1.8573, -45.9506)
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Cactus8" type="Sprite3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.5187, 1.8573, -24.4483)
+flip_h = true
+pixel_size = 0.03
+billboard = 2
+texture = ExtResource("6_6pch7")
+
+[node name="Bush" type="Node3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.47915, 0, 21.2669)
+
+[node name="BushTwo" type="Sprite3D" parent="Level/Bush"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushOne" type="Sprite3D" parent="Level/Bush"]
+transform = Transform3D(0.744696, 0, -0.667404, 0, 1, 0, 0.667404, 0, 0.744696, 0, 0.625394, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo2" type="Sprite3D" parent="Level/Bush"]
+transform = Transform3D(0.71866, 0, 0.695361, 0, 1, 0, -0.695361, 0, 0.71866, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo3" type="Sprite3D" parent="Level/Bush"]
+transform = Transform3D(0.154779, 0, 0.987949, 0, 1, 0, -0.987949, 0, 0.154779, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="Bush2" type="Node3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0642, 0, 17.7326)
+
+[node name="BushTwo" type="Sprite3D" parent="Level/Bush2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushOne" type="Sprite3D" parent="Level/Bush2"]
+transform = Transform3D(0.744696, 0, -0.667404, 0, 1, 0, 0.667404, 0, 0.744696, 0, 0.625394, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo2" type="Sprite3D" parent="Level/Bush2"]
+transform = Transform3D(0.71866, 0, 0.695361, 0, 1, 0, -0.695361, 0, 0.71866, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo3" type="Sprite3D" parent="Level/Bush2"]
+transform = Transform3D(0.154779, 0, 0.987949, 0, 1, 0, -0.987949, 0, 0.154779, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="Bush3" type="Node3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1636, 0, 15.201)
+
+[node name="BushTwo" type="Sprite3D" parent="Level/Bush3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushOne" type="Sprite3D" parent="Level/Bush3"]
+transform = Transform3D(0.744696, 0, -0.667404, 0, 1, 0, 0.667404, 0, 0.744696, 0, 0.625394, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo2" type="Sprite3D" parent="Level/Bush3"]
+transform = Transform3D(0.71866, 0, 0.695361, 0, 1, 0, -0.695361, 0, 0.71866, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo3" type="Sprite3D" parent="Level/Bush3"]
+transform = Transform3D(0.154779, 0, 0.987949, 0, 1, 0, -0.987949, 0, 0.154779, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="Bush4" type="Node3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.47915, 0, -37.4247)
+
+[node name="BushTwo" type="Sprite3D" parent="Level/Bush4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushOne" type="Sprite3D" parent="Level/Bush4"]
+transform = Transform3D(0.744696, 0, -0.667404, 0, 1, 0, 0.667404, 0, 0.744696, 0, 0.625394, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo2" type="Sprite3D" parent="Level/Bush4"]
+transform = Transform3D(0.71866, 0, 0.695361, 0, 1, 0, -0.695361, 0, 0.71866, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo3" type="Sprite3D" parent="Level/Bush4"]
+transform = Transform3D(0.154779, 0, 0.987949, 0, 1, 0, -0.987949, 0, 0.154779, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="Bush5" type="Node3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.3915, 0, -37.4247)
+
+[node name="BushTwo" type="Sprite3D" parent="Level/Bush5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushOne" type="Sprite3D" parent="Level/Bush5"]
+transform = Transform3D(0.744696, 0, -0.667404, 0, 1, 0, 0.667404, 0, 0.744696, 0, 0.625394, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo2" type="Sprite3D" parent="Level/Bush5"]
+transform = Transform3D(0.71866, 0, 0.695361, 0, 1, 0, -0.695361, 0, 0.71866, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
+[node name="BushTwo3" type="Sprite3D" parent="Level/Bush5"]
+transform = Transform3D(0.154779, 0, 0.987949, 0, 1, 0, -0.987949, 0, 0.154779, 0, 0.635092, 0)
+texture = ExtResource("7_k8pcs")
+
 [node name="Pickup" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.50772, 0.2561, 7.91506)
 collision_layer = 3
@@ -196,3 +345,12 @@ mesh = SubResource("TubeTrailMesh_xi33o")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890501, 0)
 shape = SubResource("CylinderShape3D_j47q2")
+
+[node name="Enemy2" parent="." instance=ExtResource("2_ice3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.42771, 4.69363, -7.90145)
+
+[node name="Enemy3" parent="." instance=ExtResource("2_ice3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2209, 4.69363, -7.90145)
+
+[node name="Enemy4" parent="." instance=ExtResource("2_ice3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9434, 4.69363, -7.90145)

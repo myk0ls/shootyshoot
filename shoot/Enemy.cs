@@ -12,6 +12,8 @@ public partial class Enemy : CharacterBody3D
 	public int attackDamage = 25;
     bool dead = false;
 
+	[Signal] public delegate void EnemyTaggedEventHandler();
+
 	public Player player;
 	public Area3D hitZone;
 	public AnimatedSprite3D animatedSprite;
@@ -83,8 +85,8 @@ public partial class Enemy : CharacterBody3D
 	public void damage(int damage)
 	{
 		//currentState = States.Hit;
+		EmitSignal(nameof(EnemyTagged));
 		this.health = health - damage;
-		animatedSprite.Play("hit");
 		GD.Print("HP:"+health);
 		if (health <= 0) { kill(); }
 	}

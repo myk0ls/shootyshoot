@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dyq78lsp3teeu"]
+[gd_scene load_steps=15 format=3 uid="uid://dyq78lsp3teeu"]
 
 [ext_resource type="Script" path="res://Enemy.cs" id="1_5fn6n"]
 [ext_resource type="Texture2D" uid="uid://b4algjcob8c3c" path="res://enemyHit1.png" id="2_44qwb"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://StateMachine.cs" id="6_3cjdo"]
 [ext_resource type="Script" path="res://Idle.cs" id="7_6aaqv"]
 [ext_resource type="Script" path="res://Attack.cs" id="8_sdhfa"]
+[ext_resource type="Script" path="res://Tagged.cs" id="9_xo7aa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1svlt"]
 
@@ -33,7 +34,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 5.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -57,6 +58,7 @@ animations = [{
 
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_5fn6n")
+health = 350
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_1svlt")
@@ -80,8 +82,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0925531, 0, 0)
 pixel_size = 0.004
 billboard = 2
 sprite_frames = SubResource("SpriteFrames_wajpa")
-animation = &"idle"
+animation = &"hit"
 autoplay = "idle"
+frame = 2
+frame_progress = 1.0
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 1.5
@@ -95,6 +99,9 @@ script = ExtResource("7_6aaqv")
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("8_sdhfa")
+
+[node name="Tagged" type="Node" parent="StateMachine"]
+script = ExtResource("9_xo7aa")
 
 [connection signal="body_entered" from="Area3D" to="StateMachine/Attack" method="OnHitzoneEntered"]
 [connection signal="body_exited" from="Area3D" to="StateMachine/Attack" method="OnHitzoneExit"]
