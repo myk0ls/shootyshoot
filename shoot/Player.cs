@@ -38,7 +38,7 @@ public partial class Player : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		gunAnimation = GetNode<AnimatedSprite2D>("CanvasLayer/Control/Gun/AnimatedSprite2D");
 		healthLabel = GetNode<Label>("CanvasLayer/Control/HealthLabel");
-		rayCast = GetNode<RayCast3D>("RayCast3D");
+		rayCast = GetNode<RayCast3D>("Camera3D/RayCast3D");
         shotSound = GetNode<AudioStreamPlayer>("ShootSound");
         reloadSound = GetNode<AudioStreamPlayer>("ReloadSound");
         gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/Gun/AnimationPlayer");
