@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b00tlntuchblf"]
+[gd_scene load_steps=33 format=3 uid="uid://b00tlntuchblf"]
 
 [ext_resource type="PackedScene" uid="uid://bfplj0c4jswar" path="res://player.tscn" id="1_mjhtb"]
 [ext_resource type="PackedScene" uid="uid://dyq78lsp3teeu" path="res://enemy.tscn" id="2_ice3j"]
@@ -20,6 +20,7 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 [sub_resource type="Environment" id="Environment_hus16"]
 background_mode = 1
 background_color = Color(0, 0.556863, 0.807843, 1)
+background_energy_multiplier = 0.0
 ambient_light_source = 3
 ambient_light_color = Color(0.776471, 0.776471, 0.776471, 1)
 ambient_light_sky_contribution = 0.62
@@ -55,10 +56,35 @@ albedo_color = Color(0.384314, 0.172549, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipm4v"]
 albedo_color = Color(0.384314, 0.172549, 0, 1)
 
-[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_xi33o"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0muw3"]
+size = Vector3(0.493408, 0.270996, 0.304443)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_j47q2"]
-height = 1.01548
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_twng1"]
+albedo_color = Color(0.615686, 0.470588, 0.372549, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qa54q"]
+material = SubResource("StandardMaterial3D_twng1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dovjt"]
+albedo_color = Color(0.168627, 0.380392, 0.164706, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g6kr8"]
+material = SubResource("StandardMaterial3D_dovjt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26v3t"]
+albedo_color = Color(0.992157, 0.929412, 0.933333, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rofaj"]
+material = SubResource("StandardMaterial3D_26v3t")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yvj7c"]
+size = Vector3(0.351929, 0.217285, 0.281982)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ippu"]
+albedo_color = Color(0.447059, 0.054902, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b71mi"]
+material = SubResource("StandardMaterial3D_2ippu")
 
 [node name="World" type="Node3D"]
 
@@ -89,7 +115,7 @@ transform = Transform3D(0.999915, -0.00111099, 0.0129553, -0.00984289, -0.715721
 shadow_enabled = true
 
 [node name="Enemy" parent="." instance=ExtResource("2_ice3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69363, -7.90145)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.308508, 4.69363, -7.90145)
 
 [node name="Door" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.13151, 1.45999, -0.00778198)
@@ -323,13 +349,17 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("6_towp6")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.864492, 0)
-mesh = SubResource("TubeTrailMesh_xi33o")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890501, 0)
-shape = SubResource("CylinderShape3D_j47q2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0125732, 0.774534, -0.0113525)
+shape = SubResource("BoxShape3D_0muw3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(0.436426, 0, 0, 0, 0.232686, 0, 0, 0, 0.216804, 0, 0.762588, 0)
+mesh = SubResource("BoxMesh_qa54q")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(0.451273, 0, 0, 0, 0.165234, 0, 0, 0, 0.254179, 0, 0.799946, 0)
+mesh = SubResource("BoxMesh_g6kr8")
 
 [node name="Pickup2" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8812, 0.2561, 7.91506)
@@ -339,15 +369,19 @@ script = ExtResource("6_towp6")
 typeOf = "heal"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.459999, 0.864492, 0)
-mesh = SubResource("TubeTrailMesh_xi33o")
+transform = Transform3D(0.312832, 0, 0, 0, 0.182406, 0, 0, 0, 0.237554, 0.459999, 0.864492, 0)
+mesh = SubResource("BoxMesh_rofaj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890501, 0)
-shape = SubResource("CylinderShape3D_j47q2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458525, 0.868802, -0.00695801)
+shape = SubResource("BoxShape3D_yvj7c")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pickup2"]
+transform = Transform3D(0.330368, 0, 0, 0, 0.0608762, 0, 0, 0, -0.251005, 0.459418, 0.929655, 0.000559807)
+mesh = SubResource("BoxMesh_b71mi")
 
 [node name="Enemy2" parent="." instance=ExtResource("2_ice3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.42771, 4.69363, -7.90145)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.51755, 4.69363, -7.90145)
 
 [node name="Enemy3" parent="." instance=ExtResource("2_ice3j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2209, 4.69363, -7.90145)

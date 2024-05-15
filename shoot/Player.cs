@@ -23,8 +23,6 @@ public partial class Player : CharacterBody3D
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	AnimatedSprite2D gunAnimation;
 	RayCast3D rayCast;
-	AudioStreamPlayer shotSound;
-    AudioStreamPlayer reloadSound;
     Label healthLabel;
 	AnimationPlayer gunBob;
 	AnimationTree blendTree;
@@ -39,8 +37,6 @@ public partial class Player : CharacterBody3D
 		gunAnimation = GetNode<AnimatedSprite2D>("CanvasLayer/Control/Gun/AnimatedSprite2D");
 		healthLabel = GetNode<Label>("CanvasLayer/Control/HealthLabel");
 		rayCast = GetNode<RayCast3D>("RayCast3D");
-        shotSound = GetNode<AudioStreamPlayer>("ShootSound");
-        reloadSound = GetNode<AudioStreamPlayer>("ReloadSound");
         gunBob = GetNode<AnimationPlayer>("CanvasLayer/Control/Gun/AnimationPlayer");
 		blendTree = GetNode<AnimationTree>("CanvasLayer/Control/Gun/AnimationTree");
 		gunFLash = GetNode<SpotLight3D>("Camera3D/SpotLight3D");
@@ -51,7 +47,7 @@ public partial class Player : CharacterBody3D
 		gun.GunReload += reload;
     }
 
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
 
@@ -77,6 +73,9 @@ public partial class Player : CharacterBody3D
 			velocity.X = direction.X * Speed;
 			velocity.Z = direction.Z * Speed;
 
+			if (SoundManager.Instance.getSFX("FootstepSound").Playing == false || !IsOnFloor() == true)
+				SoundManager.Instance.Play("FootstepSound");
+
 			// play bobbin
             blend = 0f;
             blendTree.Set("parameters/Blend2/blend_amount", 0);
@@ -86,7 +85,7 @@ public partial class Player : CharacterBody3D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
 
-			// smooth transition into idle
+            // smooth transition into idle
             if (blend < 1)
                 blend += 0.1f;
             blendTree.Set("parameters/Blend2/blend_amount", blend);
@@ -123,7 +122,7 @@ public partial class Player : CharacterBody3D
         GD.Print("shot");
 		EmitSignal(nameof(Player.GunShot));
         gunAnimation.Play("shoot");
-        shotSound.Play();
+		SoundManager.Instance.Play("ShootSound");
 		gunFLash.Visible = true;
 		if (rayCast.IsColliding() && rayCast.GetCollider().HasMethod("kill"))
 		{
@@ -137,7 +136,7 @@ public partial class Player : CharacterBody3D
 	{
 		gun.canReload = false;
 		gunAnimation.Play("reload");
-		reloadSound.Play();
+		SoundManager.Instance.Play("ReloadSound");
     }
 
 	public void shootAnimationEnd()

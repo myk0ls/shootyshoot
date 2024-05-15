@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxffce2nlhilf"]
+
+[ext_resource type="Script" path="res://SoundManager.cs" id="1_rpppl"]
+[ext_resource type="AudioStream" uid="uid://b7neuo7gscayc" path="res://revolverReloadSound.wav" id="2_0tk2t"]
+[ext_resource type="AudioStream" uid="uid://b60mnu7g52h20" path="res://footstep.wav" id="2_gpipy"]
+[ext_resource type="AudioStream" uid="uid://dovmo35nautsm" path="res://gunshotz.wav" id="3_apia1"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_rpppl")
+
+[node name="FootstepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_gpipy")
+volume_db = -36.542
+pitch_scale = 0.9
+mix_target = 2
+max_polyphony = 2
+bus = &"foot"
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_0tk2t")
+volume_db = 6.559
+max_polyphony = 3
+bus = &"Sfx"
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_apia1")
+max_polyphony = 3
+bus = &"Sfx"

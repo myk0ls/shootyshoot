@@ -1,13 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfplj0c4jswar"]
+[gd_scene load_steps=10 format=3 uid="uid://bfplj0c4jswar"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_qtxsx"]
+[ext_resource type="Shader" path="res://player.gdshader" id="2_jsqn2"]
 [ext_resource type="Script" path="res://Control.cs" id="2_mppnl"]
 [ext_resource type="PackedScene" uid="uid://c56w7yeia5yc4" path="res://gun.tscn" id="2_tk3fb"]
-[ext_resource type="AudioStream" uid="uid://dovmo35nautsm" path="res://gunshotz.wav" id="4_e2s60"]
 [ext_resource type="Script" path="res://InteractArea.cs" id="5_l00f0"]
-[ext_resource type="AudioStream" uid="uid://b7neuo7gscayc" path="res://revolverReloadSound.wav" id="6_2xm2r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvec6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3l3mi"]
+render_priority = 0
+shader = ExtResource("2_jsqn2")
+
+[sub_resource type="QuadMesh" id="QuadMesh_gd8sa"]
+material = SubResource("ShaderMaterial_3l3mi")
+size = Vector2(10, 10)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0nj32"]
 radius = 1.45025
@@ -33,6 +40,13 @@ light_color = Color(1, 0.905882, 0, 1)
 light_indirect_energy = 1.5
 spot_range = 3.66226
 spot_angle = 61.5998
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.380487)
+visible = false
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("QuadMesh_gd8sa")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -74,10 +88,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.129412, 0.129412, 0.129412, 0.501961)
 
-[node name="ShootSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_e2s60")
-bus = &"Sfx"
-
 [node name="InteractArea" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 2
@@ -85,11 +95,6 @@ script = ExtResource("5_l00f0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
 shape = SubResource("SphereShape3D_0nj32")
-
-[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_2xm2r")
-volume_db = 6.559
-bus = &"Sfx"
 
 [connection signal="body_entered" from="InteractArea" to="InteractArea" method="OnEnter"]
 [connection signal="body_exited" from="InteractArea" to="InteractArea" method="OnExit"]
