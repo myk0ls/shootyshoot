@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody3D
-{
+{	
 	public int health = 100;
-	public const float Speed = 8.50f;
+	public float Speed = 9.50f;
 	public const float RunSpeed = 7.5f;
 	public const float JumpVelocity = 4.5f;
 	public const float Sensitivity = 1.5f;

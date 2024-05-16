@@ -23,6 +23,9 @@ public partial class Attack : State
     {
         enemy = machine.GetParent<Enemy>();
         player = GetNode<Player>("/root/World/Player");
+        enemy.wanderTimer.Stop();
+        enemy.attackTimer.Timeout += TransitionShoot;
+        enemy.attackTimer.Start();
     }
 
     public override void Update()
@@ -34,8 +37,8 @@ public partial class Attack : State
         dir.Y = 0;
         dir = dir.Normalized();
 
-        velocity.X = dir.X * (float)2f;
-        velocity.Z = dir.Z * (float)2f;
+        velocity.X = dir.X * (float)enemy.moveSpeed;
+        velocity.Z = dir.Z * (float)enemy.moveSpeed;
 
         enemy.Velocity = velocity;
 
@@ -44,7 +47,10 @@ public partial class Attack : State
 
     public override void Exit()
     {
-
+        if (enemy != null)
+        {
+            enemy.attackTimer.Timeout -= TransitionShoot;
+        }
     }
 
     public void OnHitzoneEntered(Node node)
@@ -53,7 +59,7 @@ public partial class Attack : State
         GD.Print(node.Name);
         if (node is Player)
         {
-            enemy.doDamage();
+            //enemy.doDamage();
             enemy.attackTimer.Start();
         }
     }
@@ -62,8 +68,14 @@ public partial class Attack : State
     {
         if (node is Player)
         {
-            enemy.attackTimer.Stop();
-            GD.Print("EXIT");
+            //enemy.attackTimer.Stop();
+           // GD.Print("EXIT");
         }
+    }
+
+    public void TransitionShoot()
+    {
+        machine.TransitionTo("Shoot");
+        //enemy.attackTimer.Timeout -= TransitionShoot;
     }
 }

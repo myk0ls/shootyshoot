@@ -26,3 +26,9 @@ bus = &"Sfx"
 stream = ExtResource("3_apia1")
 max_polyphony = 3
 bus = &"Sfx"
+
+[node name="EnemyShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_apia1")
+pitch_scale = 1.25
+max_polyphony = 9
+bus = &"Sfx"

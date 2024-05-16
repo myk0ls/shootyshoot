@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfplj0c4jswar"]
+[gd_scene load_steps=11 format=3 uid="uid://bfplj0c4jswar"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_qtxsx"]
 [ext_resource type="Shader" path="res://player.gdshader" id="2_jsqn2"]
 [ext_resource type="Script" path="res://Control.cs" id="2_mppnl"]
 [ext_resource type="PackedScene" uid="uid://c56w7yeia5yc4" path="res://gun.tscn" id="2_tk3fb"]
 [ext_resource type="Script" path="res://InteractArea.cs" id="5_l00f0"]
+[ext_resource type="Texture2D" uid="uid://k2gfyelagvg4" path="res://key.png" id="5_nyaf3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvec6"]
 
@@ -71,6 +72,15 @@ offset_right = 1063.0
 offset_bottom = 625.0
 
 [node name="Gun" parent="CanvasLayer/Control" instance=ExtResource("2_tk3fb")]
+
+[node name="KeyUI" type="TextureRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 0
+offset_left = 21.0
+offset_top = 508.0
+offset_right = 149.0
+offset_bottom = 636.0
+texture = ExtResource("5_nyaf3")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 8

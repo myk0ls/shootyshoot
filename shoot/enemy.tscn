@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dyq78lsp3teeu"]
+[gd_scene load_steps=16 format=3 uid="uid://dyq78lsp3teeu"]
 
 [ext_resource type="Script" path="res://Enemy.cs" id="1_5fn6n"]
 [ext_resource type="Texture2D" uid="uid://b4algjcob8c3c" path="res://enemyHit1.png" id="2_44qwb"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Idle.cs" id="7_6aaqv"]
 [ext_resource type="Script" path="res://Attack.cs" id="8_sdhfa"]
 [ext_resource type="Script" path="res://Tagged.cs" id="9_xo7aa"]
+[ext_resource type="Script" path="res://Wander.cs" id="10_b7ak8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1svlt"]
 
@@ -87,6 +88,14 @@ autoplay = "idle"
 frame = 2
 frame_progress = 1.0
 
+[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 1.5
 
@@ -102,6 +111,9 @@ script = ExtResource("8_sdhfa")
 
 [node name="Tagged" type="Node" parent="StateMachine"]
 script = ExtResource("9_xo7aa")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("10_b7ak8")
 
 [connection signal="body_entered" from="Area3D" to="StateMachine/Attack" method="OnHitzoneEntered"]
 [connection signal="body_exited" from="Area3D" to="StateMachine/Attack" method="OnHitzoneExit"]

@@ -1,0 +1,160 @@
+[gd_scene load_steps=23 format=3 uid="uid://cjokxp3t0ctq3"]
+
+[ext_resource type="Script" path="res://Enemy.cs" id="1_v86gn"]
+[ext_resource type="Texture2D" uid="uid://d1wyctghhdqfu" path="res://assets/enemyWalk4.png" id="2_beem0"]
+[ext_resource type="Texture2D" uid="uid://b7sh8t3j7pe1u" path="res://assets/enemyWalk3.png" id="3_tfnwr"]
+[ext_resource type="Texture2D" uid="uid://bcph1ggte6tfk" path="res://assets/enemyWalk1.png" id="4_816s1"]
+[ext_resource type="Texture2D" uid="uid://df5ne6fain2m5" path="res://assets/enemyShoot1.png" id="5_g4dus"]
+[ext_resource type="Script" path="res://StateMachine.cs" id="6_4feti"]
+[ext_resource type="Texture2D" uid="uid://dbttinelix6qa" path="res://assets/enemyShoot2.png" id="6_8pklv"]
+[ext_resource type="Texture2D" uid="uid://c67ff35s2e8ir" path="res://assets/enemyShoot3.png" id="7_4a8ja"]
+[ext_resource type="Script" path="res://Idle.cs" id="7_c2a4v"]
+[ext_resource type="Script" path="res://Attack.cs" id="8_prcwx"]
+[ext_resource type="Texture2D" uid="uid://cd5a4nua4bxim" path="res://assets/enemyShoot4.png" id="8_xp2nu"]
+[ext_resource type="Script" path="res://Tagged.cs" id="9_5v1uv"]
+[ext_resource type="Texture2D" uid="uid://dvjv4r5dep4ek" path="res://assets/enemyShoot5.png" id="9_ojiwq"]
+[ext_resource type="Script" path="res://Wander.cs" id="10_3dc1p"]
+[ext_resource type="Texture2D" uid="uid://dqbi1advivkao" path="res://assets/enemyWalk2.png" id="10_m6vj0"]
+[ext_resource type="Script" path="res://Shoot.cs" id="11_lv3hr"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ggdk1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1svlt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m6cjs"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hr2dx"]
+radius = 1.15795
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v8pag"]
+radius = 25.4077
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wajpa"]
+animations = [{
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("2_beem0")
+}, {
+"duration": 1.6,
+"texture": ExtResource("3_tfnwr")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_816s1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_g4dus")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8pklv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4a8ja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xp2nu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ojiwq")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_816s1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_m6vj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tfnwr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_beem0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_v86gn")
+health = 100
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1, -100)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RayCast3D"]
+transform = Transform3D(0.271493, 0, 0, 0, -2.15618e-07, -0.264127, 0, 4.93276, -1.15453e-08, 0, 0, -5.09378)
+visible = false
+mesh = SubResource("CylinderMesh_ggdk1")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1svlt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_m6cjs")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_hr2dx")
+
+[node name="PlayerDetection" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerDetection"]
+shape = SubResource("SphereShape3D_v8pag")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.0925531, 0, 0)
+pixel_size = 0.004
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_wajpa")
+animation = &"hit"
+autoplay = "idle"
+
+[node name="WanderTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("6_4feti")
+initialNode = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("7_c2a4v")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("8_prcwx")
+
+[node name="Tagged" type="Node" parent="StateMachine"]
+script = ExtResource("9_5v1uv")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("10_3dc1p")
+
+[node name="Shoot" type="Node" parent="StateMachine"]
+script = ExtResource("11_lv3hr")
+
+[connection signal="body_entered" from="Area3D" to="StateMachine/Attack" method="OnHitzoneEntered"]
+[connection signal="body_exited" from="Area3D" to="StateMachine/Attack" method="OnHitzoneExit"]
+[connection signal="body_entered" from="PlayerDetection" to="." method="OnEnterDetection"]
+[connection signal="body_entered" from="PlayerDetection" to="StateMachine/Idle" method="OnPlayerDetection"]
