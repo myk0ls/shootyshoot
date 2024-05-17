@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://c1npu3sac4jcj"]
+
+[ext_resource type="PackedScene" uid="uid://lyemtuw3wd0c" path="res://health_item.tscn" id="1_h61ig"]
+[ext_resource type="Script" path="res://PickupFactory.cs" id="1_t80sv"]
+[ext_resource type="Script" path="res://AmmoItem.cs" id="3_b5jjc"]
+[ext_resource type="Script" path="res://ScoreItem.cs" id="4_muuv4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_44clv"]
+size = Vector3(0.198468, 0.215942, 0.245163)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_twng1"]
+albedo_color = Color(0.615686, 0.470588, 0.372549, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a3b1n"]
+material = SubResource("StandardMaterial3D_twng1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dovjt"]
+albedo_color = Color(0.168627, 0.380392, 0.164706, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wtiyd"]
+material = SubResource("StandardMaterial3D_dovjt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82ko4"]
+albedo_color = Color(0.792157, 0.898039, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f18lq"]
+
+[node name="PickupFactory" type="Node"]
+script = ExtResource("1_t80sv")
+
+[node name="HealthItem" parent="." instance=ExtResource("1_h61ig")]
+visible = false
+collision_layer = 3
+collision_mask = 3
+
+[node name="AmmoItem" type="RigidBody3D" parent="."]
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("3_b5jjc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AmmoItem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.123309, 0.0755225, -0.0113525)
+shape = SubResource("BoxShape3D_44clv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AmmoItem"]
+transform = Transform3D(0.436426, 0, 0, 0, 0.204355, 0, 0, 0, 0.23226, 0.135882, 0.0653665, 0)
+mesh = SubResource("BoxMesh_a3b1n")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="AmmoItem"]
+transform = Transform3D(0.451273, 0, 0, 0, 0.165234, 0, 0, 0, 0.254179, 0.135882, 0.100935, 0)
+mesh = SubResource("BoxMesh_wtiyd")
+
+[node name="ScoreItem" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283596, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("4_muuv4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ScoreItem"]
+transform = Transform3D(-0.07, 0, 6.1196e-09, 0, -0.004, 0, -6.1196e-09, 0, -0.07, 0.000682428, -0.00079711, -0.00107106)
+material_override = SubResource("StandardMaterial3D_82ko4")
+mesh = SubResource("CylinderMesh_f18lq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ScoreItem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0105767, 0.103049, -0.0120774)
+shape = SubResource("BoxShape3D_44clv")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ScoreItem"]
+transform = Transform3D(-0.07, 0, 6.1196e-09, 0, -0.004, 0, -6.1196e-09, 0, -0.07, -0.00594169, 0.00736955, -0.00107106)
+material_override = SubResource("StandardMaterial3D_82ko4")
+mesh = SubResource("CylinderMesh_f18lq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="ScoreItem"]
+transform = Transform3D(-0.07, 0, 6.1196e-09, 0, -0.004, 0, -6.1196e-09, 0, -0.07, 0.000682428, 0.0158094, -0.00107106)
+material_override = SubResource("StandardMaterial3D_82ko4")
+mesh = SubResource("CylinderMesh_f18lq")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="ScoreItem"]
+transform = Transform3D(-0.07, 0, 6.1196e-09, 0, -0.004, 0, -6.1196e-09, 0, -0.07, -0.00525235, 0.0261301, -0.00107106)
+material_override = SubResource("StandardMaterial3D_82ko4")
+mesh = SubResource("CylinderMesh_f18lq")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="ScoreItem"]
+transform = Transform3D(-0.07, 0, 6.1196e-09, 0, -0.004, 0, -6.1196e-09, 0, -0.07, -0.0118765, 0.0342968, -0.00107106)
+material_override = SubResource("StandardMaterial3D_82ko4")
+mesh = SubResource("CylinderMesh_f18lq")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="ScoreItem"]
+transform = Transform3D(-0.07, 0, 6.1196e-09, 0, -0.004, 0, -6.1196e-09, 0, -0.07, -0.00525235, 0.0427366, -0.00107106)
+material_override = SubResource("StandardMaterial3D_82ko4")
+mesh = SubResource("CylinderMesh_f18lq")

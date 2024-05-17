@@ -24,6 +24,8 @@ public partial class Control : Godot.Control
 		player.GunShot += UpdateAmmo;
 		gun.GunReload += UpdateAmmo;
 		customSignals.UIKeyShow += ShowKeyUI;
+		customSignals.UIHeal += UpdateHealth;
+		customSignals.UIAmmo += UpdateAmmo;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

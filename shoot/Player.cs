@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody3D
-{	
+{
+	[Export]
 	public int health = 100;
-	public float Speed = 9.50f;
+    [Export]
+    public float Speed = 9.50f;
 	public const float RunSpeed = 7.5f;
 	public const float JumpVelocity = 4.5f;
 	public const float Sensitivity = 1.5f;
@@ -29,6 +31,7 @@ public partial class Player : CharacterBody3D
 	Area3D interactArea;
 	gun gun;
     SpotLight3D gunFLash;
+	CustomSignals customSignals;
 
     public override void _Ready()
     {
@@ -42,7 +45,10 @@ public partial class Player : CharacterBody3D
 		gunFLash = GetNode<SpotLight3D>("Camera3D/SpotLight3D");
 		interactArea = GetNode<Area3D>("InteractArea");
 		gun = (gun)GetNode<Node>("CanvasLayer/Control/Gun");
+		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		keyArray = new Key[2];
+
+		customSignals.Heal += () => getHealth(30);
         gunAnimation.AnimationFinished += () => shootAnimationEnd();
 		gun.GunReload += reload;
     }
@@ -155,6 +161,11 @@ public partial class Player : CharacterBody3D
 		{
 			QueueFree();
 		}
+	}
+
+	public void getHealth(int heal)
+	{
+		this.health = health + heal;
 	}
 
 	public void pickKey(Key key)

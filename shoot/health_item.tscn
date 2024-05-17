@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://lyemtuw3wd0c"]
+
+[ext_resource type="Script" path="res://HealthItem.cs" id="1_3fl72"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26v3t"]
+albedo_color = Color(0.992157, 0.929412, 0.933333, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pxwua"]
+material = SubResource("StandardMaterial3D_26v3t")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_spg3s"]
+size = Vector3(0.351929, 0.217285, 0.281982)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ippu"]
+albedo_color = Color(0.447059, 0.054902, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_37ka5"]
+material = SubResource("StandardMaterial3D_2ippu")
+
+[node name="HealthItem" type="RigidBody3D"]
+script = ExtResource("1_3fl72")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.390523, 0, 0, 0, 0.182406, 0, 0, 0, 0.313008, 0.136702, 0.0528212, 0)
+mesh = SubResource("BoxMesh_pxwua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.135227, 0.0571312, -0.00695801)
+shape = SubResource("BoxShape3D_spg3s")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.424719, 0, 0, 0, 0.0608762, 0, 0, 0, -0.331091, 0.136121, 0.15396, 0.000559807)
+mesh = SubResource("BoxMesh_37ka5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.127406, 0, 0, 0, 0.047952, 0, 0, 0, -0.316473, 0.136121, 0.0487491, 0.000559807)
+mesh = SubResource("BoxMesh_37ka5")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.36551e-05, 0.0470358, 0, -0.130355, -4.92708e-06, 0, 0, 0, -0.316473, 0.136121, 0.0487491, 0.000559807)
+mesh = SubResource("BoxMesh_37ka5")

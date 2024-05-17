@@ -1,5 +1,6 @@
-[gd_scene load_steps=41 format=3 uid="uid://b00tlntuchblf"]
+[gd_scene load_steps=43 format=3 uid="uid://b00tlntuchblf"]
 
+[ext_resource type="Script" path="res://world.cs" id="1_6njue"]
 [ext_resource type="PackedScene" uid="uid://bfplj0c4jswar" path="res://player.tscn" id="1_mjhtb"]
 [ext_resource type="Script" path="res://Door.cs" id="3_b14s8"]
 [ext_resource type="Script" path="res://Key.cs" id="4_iyg5s"]
@@ -8,6 +9,7 @@
 [ext_resource type="Script" path="res://Pickup.cs" id="6_towp6"]
 [ext_resource type="Texture2D" uid="uid://qy6pc5cqhfb8" path="res://bush.png" id="7_k8pcs"]
 [ext_resource type="PackedScene" uid="uid://cjokxp3t0ctq3" path="res://RangedEnemy.tscn" id="8_hwykm"]
+[ext_resource type="PackedScene" uid="uid://c1npu3sac4jcj" path="res://pickup_factory.tscn" id="10_umh8s"]
 
 [sub_resource type="Environment" id="Environment_hus16"]
 background_mode = 1
@@ -81,37 +83,38 @@ albedo_color = Color(0.317647, 0.670588, 0.772549, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0muw3"]
 size = Vector3(0.493408, 0.270996, 0.304443)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_twng1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pnmg3"]
 albedo_color = Color(0.615686, 0.470588, 0.372549, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_qa54q"]
-material = SubResource("StandardMaterial3D_twng1")
+material = SubResource("StandardMaterial3D_pnmg3")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dovjt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l7h0l"]
 albedo_color = Color(0.168627, 0.380392, 0.164706, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_g6kr8"]
-material = SubResource("StandardMaterial3D_dovjt")
+material = SubResource("StandardMaterial3D_l7h0l")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26v3t"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vjttv"]
 albedo_color = Color(0.992157, 0.929412, 0.933333, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_rofaj"]
-material = SubResource("StandardMaterial3D_26v3t")
+material = SubResource("StandardMaterial3D_vjttv")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvj7c"]
 size = Vector3(0.351929, 0.217285, 0.281982)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ippu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eju0i"]
 albedo_color = Color(0.447059, 0.054902, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_b71mi"]
-material = SubResource("StandardMaterial3D_2ippu")
+material = SubResource("StandardMaterial3D_eju0i")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5qnhy"]
 albedo_color = Color(0.517647, 0.266667, 0.121569, 1)
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_6njue")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.522498, -0.85264, -3.72701e-08, 0, -4.37114e-08, 1, -0.85264, -0.522498, -2.28391e-08, 0, 0, 0)
@@ -119,7 +122,7 @@ light_color = Color(1, 1, 0.905882, 1)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_mjhtb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24638, 55.4235)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24638, 68.9356)
 collision_layer = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -2581,6 +2584,7 @@ mesh = SubResource("BoxMesh_b71mi")
 [node name="Enemy" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64689, -7.88183)
 health = 200
+ItemDropType = "AmmoItem"
 
 [node name="Plane" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.58518, -7.55273, -5.94562)
@@ -2598,23 +2602,31 @@ material = SubResource("StandardMaterial3D_5qnhy")
 [node name="Enemy2" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09959, 2.64689, -7.88183)
 health = 200
+ItemDropType = "AmmoItem"
 
 [node name="Enemy3" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.32506, 2.64689, -7.88183)
 health = 200
+ItemDropType = "AmmoItem"
 
 [node name="Enemy4" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09959, 2.64689, 14.587)
 health = 200
+ItemDropType = "AmmoItem"
 
 [node name="Enemy5" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.32506, 2.64689, 14.587)
-health = 200
+health = 50
+ItemDropType = "ScoreItem"
 
 [node name="Enemy6" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09959, 2.64689, 38.3521)
-health = 200
+health = 50
+ItemDropType = "HealthItem"
 
 [node name="Enemy7" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.32506, 2.64689, 38.3521)
-health = 200
+health = 50
+ItemDropType = "AmmoItem"
+
+[node name="PickupFactory" parent="." instance=ExtResource("10_umh8s")]

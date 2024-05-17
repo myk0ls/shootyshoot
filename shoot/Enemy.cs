@@ -13,6 +13,9 @@ public partial class Enemy : CharacterBody3D
     public float attackRange = 2f;
     [Export]
     public int attackDamage = 25;
+	[Export]
+	public string ItemDropType;
+
     bool dead = false;
 
 	[Signal] public delegate void EnemyTaggedEventHandler();
@@ -23,6 +26,8 @@ public partial class Enemy : CharacterBody3D
 	public Timer attackTimer;
 	public Timer wanderTimer;
 	public RayCast3D rayCast;
+	public PackedScene pickupFactory;
+	public PickupFactory factory;
 
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -34,8 +39,10 @@ public partial class Enemy : CharacterBody3D
 		attackTimer = GetNode<Timer>("AttackTimer");
 		wanderTimer = GetNode<Timer>("WanderTimer");
         rayCast = GetNode<RayCast3D>("RayCast3D");
+		factory = GetParent().GetNode<PickupFactory>("PickupFactory");
+		//pickupFactory = ResourceLoader.Load<PackedScene>("res://pickup_factory.tscn");
         //attackTimer.Timeout += () => doDamage();
-		hitZone.Monitorable = true;
+        hitZone.Monitorable = true;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -60,8 +67,12 @@ public partial class Enemy : CharacterBody3D
 	void kill()
 	{
 		dead = true;
-		QueueFree();
-	}
+		PickupItem item = factory.CreatePickup(ItemDropType);
+		GetParent().AddChild(item);
+        item.GlobalPosition = this.GlobalPosition;
+		item.Visible = true;
+        QueueFree();
+    }
 
 	public void doDamage()
 	{

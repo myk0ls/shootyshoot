@@ -11,12 +11,16 @@ public partial class gun : Node
 	public delegate void GunReloadEventHandler();
 
 	Player player;
+	CustomSignals customSignals;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		player = (Player)GetNode<CharacterBody3D>("/root/World/Player");
-		GD.Print(player.ToString());
+        customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+        GD.Print(player.ToString());
+
+		customSignals.Ammo += () => AddTotal(30);
 		player.GunShot += UseAmmo;
 	}
 
@@ -44,5 +48,10 @@ public partial class gun : Node
             ammoClip--;
 
         }
+	}
+
+	public void AddTotal(int ammo)
+	{
+		ammoTotal = ammoTotal + ammo;
 	}
 }

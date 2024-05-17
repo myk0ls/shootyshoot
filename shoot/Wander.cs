@@ -62,7 +62,7 @@ public partial class Wander : State
 
     public void TransitionIdle()
     {
-        GD.Print("Keisk");
+        //GD.Print("Keisk");
         machine.TransitionTo("Idle");
     }
 }
