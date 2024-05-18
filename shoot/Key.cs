@@ -27,6 +27,8 @@ public partial class Key : RigidBody3D
 		GD.Print("Key pickup");
 		player.pickKey(this);
 		customSignals.EmitSignal(nameof(customSignals.UIKeyShow));
+        customSignals.EmitSignal(nameof(customSignals.Score));
+        customSignals.EmitSignal(nameof(customSignals.UIScore));
         QueueFree();
     }
 }

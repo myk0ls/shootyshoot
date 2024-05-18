@@ -81,4 +81,5 @@ esc={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+scaling_3d/scale=0.45
 scaling_3d/fsr_sharpness=0.0

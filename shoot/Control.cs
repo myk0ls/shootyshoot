@@ -7,8 +7,11 @@ public partial class Control : Godot.Control
 	gun gun;
 	Label ammoLabel;
 	Label healthLabel;
+	Label scoreLabel;
 	TextureRect keyUI;
 	CustomSignals customSignals;
+	Score score;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -16,8 +19,10 @@ public partial class Control : Godot.Control
         player = (Player)GetNode<CharacterBody3D>("/root/World/Player");
         ammoLabel = GetNode<Label>("AmmoLabel");
         healthLabel = GetNode<Label>("HealthLabel");
+		scoreLabel = GetNode<Label>("ScoreLabel");
         gun = (gun)GetNode<Node>("Gun");
 		keyUI = GetNode<TextureRect>("KeyUI");
+		score = GetNode<Score>("/root/World/Score");
 
 		ammoLabel.Text = "AmmoClip:" + gun.ammoClip + "\n" +
 						 "AmmoTotal:" + gun.ammoTotal;
@@ -26,6 +31,7 @@ public partial class Control : Godot.Control
 		customSignals.UIKeyShow += ShowKeyUI;
 		customSignals.UIHeal += UpdateHealth;
 		customSignals.UIAmmo += UpdateAmmo;
+		customSignals.UIScore += UpdateScore;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,4 +54,9 @@ public partial class Control : Godot.Control
 	{
 		keyUI.Visible = true;
 	}
+
+	public void UpdateScore()
+	{
+		scoreLabel.Text = "Score:" + score.ScoreAmount;
+    }
 }

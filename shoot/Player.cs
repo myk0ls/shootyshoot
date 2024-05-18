@@ -159,7 +159,8 @@ public partial class Player : CharacterBody3D
 		healthLabel.Text = "HP:" + health;
 		if (health <= 0)
 		{
-			QueueFree();
+			GetTree().ReloadCurrentScene();
+			//QueueFree();
 		}
 	}
 

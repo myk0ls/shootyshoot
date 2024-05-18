@@ -30,12 +30,10 @@ script = ExtResource("1_t80sv")
 
 [node name="HealthItem" parent="." instance=ExtResource("1_h61ig")]
 visible = false
-collision_layer = 3
 collision_mask = 3
 
 [node name="AmmoItem" type="RigidBody3D" parent="."]
 visible = false
-collision_layer = 3
 collision_mask = 3
 script = ExtResource("3_b5jjc")
 
@@ -53,7 +51,7 @@ mesh = SubResource("BoxMesh_wtiyd")
 
 [node name="ScoreItem" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283596, 0)
-collision_layer = 3
+visible = false
 collision_mask = 3
 script = ExtResource("4_muuv4")
 

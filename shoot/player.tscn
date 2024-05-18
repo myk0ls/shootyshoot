@@ -82,6 +82,14 @@ offset_right = 149.0
 offset_bottom = 636.0
 texture = ExtResource("5_nyaf3")
 
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1075.0
+offset_top = 7.0
+offset_right = 1132.0
+offset_bottom = 30.0
+text = "Score:0"
+
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
