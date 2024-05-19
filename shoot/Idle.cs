@@ -6,6 +6,7 @@ public partial class Idle : State
     Enemy enemy;
 	Timer idleTimer;
 	Timer wanderTimer;
+	CustomSignals customSignals;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
@@ -37,11 +38,13 @@ public partial class Idle : State
     {
         enemy = machine.GetParent<Enemy>();
 		enemy.EnemyTagged += EnemyTagged;
-		idleTimer = machine.GetParent<Enemy>().GetNode<Timer>("IdleTimer");
+        customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+        idleTimer = machine.GetParent<Enemy>().GetNode<Timer>("IdleTimer");
 		Random rand = new Random();
 		idleTimer.WaitTime = (1 + rand.NextDouble() * 2);
         idleTimer.Start();
         idleTimer.Timeout += Wander;
+		customSignals.EnemyDeath += Death;
     }
 
     public override void Update()
@@ -61,18 +64,31 @@ public partial class Idle : State
 	{
         if (node is Player)
         {
-			machine.TransitionTo("Attack");
-            idleTimer.Stop();
+            if (enemy.dead == false)
+			{
+                machine.TransitionTo("Attack");
+                idleTimer.Stop();
+            }
         }
     }
 
 	public void EnemyTagged()
 	{
-		machine.TransitionTo("Tagged");
+		if (enemy.dead == false)
+			machine.TransitionTo("Tagged");
     }
 
 	public void Wander()
 	{
-		machine.TransitionTo("Wander");
+        if (enemy.dead == false)
+            machine.TransitionTo("Wander");
     }
+
+	public void Death()
+	{
+		if (enemy.health <= 0)
+		{
+            machine.TransitionTo("Death");
+        }
+	}
 }

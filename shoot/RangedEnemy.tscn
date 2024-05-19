@@ -1,9 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://cjokxp3t0ctq3"]
+[gd_scene load_steps=27 format=3 uid="uid://cjokxp3t0ctq3"]
 
 [ext_resource type="Script" path="res://Enemy.cs" id="1_v86gn"]
 [ext_resource type="Texture2D" uid="uid://d1wyctghhdqfu" path="res://assets/enemyWalk4.png" id="2_beem0"]
+[ext_resource type="Texture2D" uid="uid://cluqadncrrotv" path="res://assets/enemyDie1.png" id="2_wfgvk"]
+[ext_resource type="Texture2D" uid="uid://t7qi7rf4wabw" path="res://assets/enemyDie2.png" id="3_jwv4n"]
 [ext_resource type="Texture2D" uid="uid://b7sh8t3j7pe1u" path="res://assets/enemyWalk3.png" id="3_tfnwr"]
 [ext_resource type="Texture2D" uid="uid://bcph1ggte6tfk" path="res://assets/enemyWalk1.png" id="4_816s1"]
+[ext_resource type="Texture2D" uid="uid://bk7l1e4tivqdc" path="res://assets/enemyDie3.png" id="4_ot161"]
 [ext_resource type="Texture2D" uid="uid://df5ne6fain2m5" path="res://assets/enemyShoot1.png" id="5_g4dus"]
 [ext_resource type="Script" path="res://StateMachine.cs" id="6_4feti"]
 [ext_resource type="Texture2D" uid="uid://dbttinelix6qa" path="res://assets/enemyShoot2.png" id="6_8pklv"]
@@ -16,6 +19,7 @@
 [ext_resource type="Script" path="res://Wander.cs" id="10_3dc1p"]
 [ext_resource type="Texture2D" uid="uid://dqbi1advivkao" path="res://assets/enemyWalk2.png" id="10_m6vj0"]
 [ext_resource type="Script" path="res://Shoot.cs" id="11_lv3hr"]
+[ext_resource type="Script" path="res://Death.cs" id="20_vgyqg"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ggdk1"]
 
@@ -32,6 +36,20 @@ radius = 25.4077
 [sub_resource type="SpriteFrames" id="SpriteFrames_wajpa"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wfgvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jwv4n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ot161")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.5,
 "texture": ExtResource("2_beem0")
 }, {
@@ -40,7 +58,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 9.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -68,7 +86,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -153,6 +171,9 @@ script = ExtResource("10_3dc1p")
 
 [node name="Shoot" type="Node" parent="StateMachine"]
 script = ExtResource("11_lv3hr")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("20_vgyqg")
 
 [connection signal="body_entered" from="Area3D" to="StateMachine/Attack" method="OnHitzoneEntered"]
 [connection signal="body_exited" from="Area3D" to="StateMachine/Attack" method="OnHitzoneExit"]

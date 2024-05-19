@@ -130,7 +130,7 @@ public partial class Player : CharacterBody3D
         gunAnimation.Play("shoot");
 		SoundManager.Instance.Play("ShootSound");
 		gunFLash.Visible = true;
-		if (rayCast.IsColliding() && rayCast.GetCollider().HasMethod("kill"))
+		if (rayCast.IsColliding() && rayCast.GetCollider().HasMethod("damage"))
 		{
 			GD.Print(rayCast.GetCollider().ToString());
 			//GD.Print("HIT!");

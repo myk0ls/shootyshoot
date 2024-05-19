@@ -52,7 +52,10 @@ public partial class Control : Godot.Control
 
 	public void ShowKeyUI()
 	{
-		keyUI.Visible = true;
+		if (keyUI.Visible == false)
+			keyUI.Visible = true;
+		else if (keyUI.Visible == true)
+			keyUI.Visible = false;
 	}
 
 	public void UpdateScore()

@@ -4,6 +4,9 @@ using System;
 public partial class CustomSignals : Node
 {
     [Signal]
+    public delegate void EnemyDeathEventHandler();
+
+    [Signal]
     public delegate void UIKeyShowEventHandler();
 
     [Signal]

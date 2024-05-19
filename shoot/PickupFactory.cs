@@ -22,7 +22,7 @@ public partial class PickupFactory : Node
 	{
 	}
 
-	public PickupItem CreatePickup(string type)
+	public PickupItem CreateItem(string type)
 	{
         if (!pickups.ContainsKey(type))
             return null;

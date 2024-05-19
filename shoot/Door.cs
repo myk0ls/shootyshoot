@@ -8,11 +8,13 @@ public partial class Door : CsgBox3D
 	public int doorID { get; set; } = 0;
 
 	Player player;
+    public CustomSignals customSignals;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
-        player = (Player)GetNode<CharacterBody3D>("/root/World/Player");
+		player = (Player)GetNode<CharacterBody3D>("/root/World/Player");
+		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,6 +31,7 @@ public partial class Door : CsgBox3D
                 if (player.keyArray[i].keyID == doorID)
                 {
                     GD.Print("TINKA RAKTAS");
+					customSignals.EmitSignal(nameof(customSignals.UIKeyShow));
                     QueueFree();
                     return;
                 }

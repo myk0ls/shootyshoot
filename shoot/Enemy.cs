@@ -16,7 +16,7 @@ public partial class Enemy : CharacterBody3D
 	[Export]
 	public string ItemDropType;
 
-    bool dead = false;
+    public bool dead = false;
 
 	[Signal] public delegate void EnemyTaggedEventHandler();
 
@@ -42,8 +42,9 @@ public partial class Enemy : CharacterBody3D
         rayCast = GetNode<RayCast3D>("RayCast3D");
 		factory = GetParent().GetNode<PickupFactory>("PickupFactory");
         customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-        //pickupFactory = ResourceLoader.Load<PackedScene>("res://pickup_factory.tscn");
-        //attackTimer.Timeout += () => doDamage();
+		//pickupFactory = ResourceLoader.Load<PackedScene>("res://pickup_factory.tscn");
+		//attackTimer.Timeout += () => doDamage();
+		//customSignals.EnemyDeath += DropItem;
         hitZone.Monitorable = true;
     }
 
@@ -63,25 +64,24 @@ public partial class Enemy : CharacterBody3D
 		EmitSignal(nameof(EnemyTagged));
 		this.health = health - damage;
 		GD.Print("HP:"+health);
-		if (health <= 0) { kill(); }
+		if (health <= 0) { customSignals.EmitSignal(nameof(customSignals.EnemyDeath)); }
 	}
-
-	void kill()
+	/*
+	void DropItem()
 	{
-		dead = true;
+		if (!dead) return;
 		if (ItemDropType != "None")
 		{
-            PickupItem item = factory.CreatePickup(ItemDropType);
+            PickupItem item = factory.CreateItem(ItemDropType);
             GetParent().AddChild(item);
             item.GlobalPosition = this.GlobalPosition;
             item.Visible = true;
 			item.CollisionLayer = 2;
         }
-        QueueFree();
 		customSignals.EmitSignal(nameof(customSignals.Score));
         customSignals.EmitSignal(nameof(customSignals.UIScore));
     }
-
+	*/
 	public void doDamage()
 	{
 		player.getDamage(attackDamage);

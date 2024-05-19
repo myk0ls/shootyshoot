@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b00tlntuchblf"]
+[gd_scene load_steps=33 format=3 uid="uid://b00tlntuchblf"]
 
 [ext_resource type="Script" path="res://world.cs" id="1_6njue"]
 [ext_resource type="PackedScene" uid="uid://bfplj0c4jswar" path="res://player.tscn" id="1_mjhtb"]
@@ -79,9 +79,6 @@ albedo_color = Color(0.52549, 0.219608, 0.176471, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qjrsu"]
 albedo_color = Color(0.317647, 0.670588, 0.772549, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bj35i"]
-size = Vector3(4.00098, 9.13623, 43.8637)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5qnhy"]
 albedo_color = Color(0.517647, 0.266667, 0.121569, 1)
@@ -2509,11 +2506,37 @@ use_collision = true
 size = Vector3(126.943, 24.7316, 34.6181)
 material = SubResource("StandardMaterial3D_ipm4v")
 
-[node name="Bounds" type="Area3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.75363, -20.9269, 4.12469, 57.3247)
+[node name="Bounds" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0726, 4.24896, 43.782)
+visible = false
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(7.39545, 9.49792, 92.9165)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Bounds"]
-shape = SubResource("BoxShape3D_bj35i")
+[node name="Bounds2" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5348, 4.24896, 4.77004)
+visible = false
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(7.39545, 9.49792, 170.94)
+
+[node name="Bounds3" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.5647, 4.24896, -46.0851)
+visible = false
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(179.594, 9.49792, 15.9015)
+
+[node name="Bounds4" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.2579, 4.24896, 3.19411)
+visible = false
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(136.208, 9.49792, 15.9015)
 
 [node name="Enemy" parent="." instance=ExtResource("8_hwykm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64689, -7.88183)
@@ -2560,3 +2583,39 @@ ItemDropType = "AmmoItem"
 
 [node name="Score" type="Node" parent="."]
 script = ExtResource("11_kcimw")
+
+[node name="Enemy8" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.0878, 2.64689, -26.402)
+ItemDropType = "HealthItem"
+
+[node name="Enemy9" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.1934, 2.64689, -15.2667)
+ItemDropType = "AmmoItem"
+
+[node name="Enemy10" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.8683, 2.64689, -26.402)
+ItemDropType = "ScoreItem"
+
+[node name="Enemy11" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.3133, 2.64689, -13.475)
+ItemDropType = "HealthItem"
+
+[node name="Enemy12" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.3489, 2.64689, -26.402)
+ItemDropType = "AmmoItem"
+
+[node name="Enemy13" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.3142, 2.64689, -14.0383)
+ItemDropType = "AmmoItem"
+
+[node name="Enemy14" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.1247, 2.64689, -26.7275)
+ItemDropType = "ScoreItem"
+
+[node name="Enemy15" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.8545, 2.64689, -14.0383)
+ItemDropType = "ScoreItem"
+
+[node name="Enemy16" parent="." instance=ExtResource("8_hwykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.3142, 2.64689, -28.3403)
+ItemDropType = "ScoreItem"

@@ -75,7 +75,8 @@ public partial class Attack : State
 
     public void TransitionShoot()
     {
-        machine.TransitionTo("Shoot");
+        if (enemy.dead == false)
+            machine.TransitionTo("Shoot");
         //enemy.attackTimer.Timeout -= TransitionShoot;
     }
 }

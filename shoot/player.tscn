@@ -58,36 +58,61 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_mppnl")
 
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 561.0
+offset_right = 138.0
+offset_bottom = 601.0
+
 [node name="HealthLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 73.0
+offset_top = 568.0
+offset_right = 127.0
+offset_bottom = 591.0
 text = "HP:100"
+
+[node name="Panel3" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 941.0
+offset_top = 539.0
+offset_right = 1089.0
+offset_bottom = 600.0
 
 [node name="AmmoLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_left = 1023.0
-offset_top = 602.0
-offset_right = 1063.0
-offset_bottom = 625.0
+offset_left = 950.0
+offset_top = 544.0
+offset_right = 1049.0
+offset_bottom = 593.0
+text = "AmmoClip:
+AmmoTotal:"
 
 [node name="Gun" parent="CanvasLayer/Control" instance=ExtResource("2_tk3fb")]
 
 [node name="KeyUI" type="TextureRect" parent="CanvasLayer/Control"]
 visible = false
 layout_mode = 0
-offset_left = 21.0
-offset_top = 508.0
-offset_right = 149.0
-offset_bottom = 636.0
+offset_left = 240.0
+offset_top = 538.0
+offset_right = 368.0
+offset_bottom = 666.0
 texture = ExtResource("5_nyaf3")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 24.0
+offset_right = 616.0
+offset_bottom = 63.0
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_left = 1075.0
-offset_top = 7.0
-offset_right = 1132.0
-offset_bottom = 30.0
+offset_left = 536.0
+offset_top = 29.0
+offset_right = 593.0
+offset_bottom = 52.0
 text = "Score:0"
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]

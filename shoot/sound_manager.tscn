@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxffce2nlhilf"]
+[gd_scene load_steps=6 format=3 uid="uid://cxffce2nlhilf"]
 
 [ext_resource type="Script" path="res://SoundManager.cs" id="1_rpppl"]
 [ext_resource type="AudioStream" uid="uid://b7neuo7gscayc" path="res://revolverReloadSound.wav" id="2_0tk2t"]
 [ext_resource type="AudioStream" uid="uid://b60mnu7g52h20" path="res://footstep.wav" id="2_gpipy"]
 [ext_resource type="AudioStream" uid="uid://dovmo35nautsm" path="res://gunshotz.wav" id="3_apia1"]
+[ext_resource type="AudioStream" uid="uid://r2x2bxiob8qv" path="res://assets/wildwest.wav" id="5_6a0mo"]
 
 [node name="SoundManager" type="Node"]
 script = ExtResource("1_rpppl")
@@ -32,3 +33,8 @@ stream = ExtResource("3_apia1")
 pitch_scale = 1.25
 max_polyphony = 9
 bus = &"Sfx"
+
+[node name="ThemeMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_6a0mo")
+autoplay = true
+bus = &"Music"
